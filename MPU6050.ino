@@ -26,6 +26,8 @@ uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 
+VectorFloat gravity;    // [x, y, z]            gravity vector
+Quaternion q;           // [w, x, y, z]         quaternion container
 float ypr[3]; //[yaw,pitch,roll]
 
 
