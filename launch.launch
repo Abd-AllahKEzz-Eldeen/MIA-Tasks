@@ -1,0 +1,9 @@
+<launch>
+  <node name="set_point" pkg="PID" type="PID.py" output="screen"/>
+  <node name="RPM_subscriber" pkg="PID" type="RPM.py" output="screen"/>
+  <node name="rqtplot" pkg="rqt_plot" type="rqt_plot"/>
+  <node name="rosserial" pkg="rosserial_python" type="serial_node.py" output="screen">
+  <param name="port" value="/dev/ttyUSB0"/>
+  <param name="baud" value="115200"/>
+  </node>
+</launch>
