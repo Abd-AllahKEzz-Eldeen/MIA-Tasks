@@ -15,7 +15,7 @@ long counter0=0,dcounter=0;                //variables to calculate change in co
 float set_point=0;                         //set point to be acheived
 float Kp=10,Ki=7,Kd=1;                     //PID constants
 float error=0,prev_error=0,total_error=0;  //error variables
-double dtime,time0;                        //variables to calculate time differential element
+double dtime=1e-6,time0;                        //variables to calculate time differential element
 long RPM=0;                                //value of RPM (initially = 0)
 float PID=0;                               //value of PID (initially = 0)
 
@@ -57,13 +57,12 @@ void setup()
   //Attaching inturrupt to encoder pins
   attachInterrupt(digitalPinToInterrupt(pinA),pin_A,CHANGE);
   attachInterrupt(digitalPinToInterrupt(pinB),pin_B,CHANGE);
-  
-  time0=millis();
+ 
 }
 
 void loop() 
 {
-  dtime=millis()-time0;       //the differential element of time
+  time0 = millis();
 
   PIDRoutine();                 //calculating PID
 
@@ -86,6 +85,7 @@ void loop()
   node_handler_publisher.spinOnce();
   node_handler_subscriber.spinOnce();
   
+  dtime=millis()-time0;       //the differential element of time
 }
 
 
@@ -110,7 +110,7 @@ void RPMCalc()                    //method to calculate the RPM
 {
   dcounter = counter - counter0;
   counter0 = counter;
-  RPM = dcounter*3600/(540*dtime);             //counter/540= #revolutions  dtime/3600 = minute
+  RPM = dcounter*60000/(540*dtime);             //counter/540= #revolutions  dtime/60000 = minute
 }
 
 void PIDRoutine()                 //method to calculate the PID
